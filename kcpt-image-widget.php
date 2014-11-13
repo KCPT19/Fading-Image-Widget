@@ -145,40 +145,33 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
         ?>
 
-
-        <?php if( $img_thumb or $img_thumb2 ): ?>
         <p>
-            <label for="image1"><?php 'Image 1 and/or Image 2'; ?></label><br>
-            <?php if( $img_thumb ): ?>
-                <img src="<?php echo $img_thumb[0]; ?>" width="<?php echo $img_thumb[1]; ?>" height="<?php echo $img_thumb[2]; ?>" />
-            <?php endif; ?>
-            <?php if( $img_thumb2 ): ?>
-                <img src="<?php echo $img_thumb2[0]; ?>" width="<?php echo $img_thumb2[1]; ?>" height="<?php echo $img_thumb2[2]; ?>" />
-            <?php endif; ?>
-        </p>
-        <?php endif; ?>
-
-        <p>
-            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e('Title (Optional. Looks better without)', 'imagew'); ?></label>
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>">Title (Optional)</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
         </p>
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'img1' ); ?>"><?php _e('Image ID #1', 'imagew'); ?></label>
+            <label for="<?php echo $this->get_field_id( 'img1' ); ?>">Image 1 ID</label>
             <input type="text" id="<?php echo $this->get_field_id( 'img1' ); ?>" name="<?php echo $this->get_field_name( 'img1' ); ?>" value="<?php echo $instance['img1']; ?>" style="width:100%;" />
+            <?php if( $img_thumb ): ?>
+                <br /><img src="<?php echo $img_thumb[0]; ?>" width="<?php echo $img_thumb[1]; ?>" height="<?php echo $img_thumb[2]; ?>" /><br />
+            <?php endif; ?>
             <button class="insert-kcpt-image">Insert Image</button>
         </p>
 
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'img2' ); ?>"><?php _e('Image ID #2 (Rollover)', 'imagew'); ?></label>
+            <label for="<?php echo $this->get_field_id( 'img2' ); ?>">Image 2 ID (Rollover)</label>
             <input type="text" id="<?php echo $this->get_field_id( 'img2' ); ?>" name="<?php echo $this->get_field_name( 'img2' ); ?>" value="<?php echo $instance['img2']; ?>" style="width:100%;" />
+            <?php if( $img_thumb2 ): ?>
+                <br /><img src="<?php echo $img_thumb2[0]; ?>" width="<?php echo $img_thumb2[1]; ?>" height="<?php echo $img_thumb2[2]; ?>" /><br />
+            <?php endif; ?>
             <button class="insert-kcpt-image">Insert Image</button>
         </p>
 
 
         <p>
-            <label for="<?php echo $this->get_field_id( 'href' ); ?>"><?php _e('Url', 'imagew'); ?></label>
+            <label for="<?php echo $this->get_field_id( 'href' ); ?>">URL</label>
             <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
         </p>
 
@@ -189,7 +182,7 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
                         e.preventDefault();
 
-                        var inputToFill = $(e.currentTarget).prev();
+                        var inputToFill = $(e.currentTarget).prev('input[type="text"]');
                         
                         //If the frame already exists, reopen it
                         if (typeof(custom_file_frame)!=="undefined") {
