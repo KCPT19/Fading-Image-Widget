@@ -1,4 +1,4 @@
-=== KCPT Image Widget ===
+=== KCPT Fading Image Widget ===
 Contributors: Fastmover
 Donate link: http://www.kcpt.org/
 Tags: widget, image, image widget

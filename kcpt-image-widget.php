@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: KCPT Image Widget
+ * Plugin Name: KCPT Fading Image Widget
  * Plugin URI: http://www.KCPT.org/
  * Description: A simple image widget which will fade another image through on hover.
  * Version: 0.0.1
