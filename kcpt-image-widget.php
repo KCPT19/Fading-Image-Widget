@@ -14,8 +14,8 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
     function __construct() {
         parent::__construct(
             'kcpt_image_widget',
-            'Image Widget',
-            array( 'description' => 'A widget that displays image boxes' )
+            'Fading Image Widget',
+            array( 'description' => 'A widget that displays an image box - linkable and can fade into a 2nd image.' )
         );
     }
 
