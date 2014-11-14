@@ -3,7 +3,7 @@
  * Plugin Name: KCPT Fading Image Widget
  * Plugin URI: http://www.KCPT.org/
  * Description: A simple image widget which will fade another image through on hover.
- * Version: 0.0.1
+ * Version: 0.0.2
  * Author: Steven Kohlmeyer
  * Author URI: http://StevenKohlmeyer.com
  * License: LGPL2
