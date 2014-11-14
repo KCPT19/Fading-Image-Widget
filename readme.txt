@@ -22,16 +22,6 @@ A simple image widget, you can set a url for the image to link to upon click.  Y
 4. Add new shortcodes based on your needs.
 5. Have fun!
 
-== Frequently Asked Questions ==
-
-= A question that someone might have =
-
-An answer to that question.
-
-= What about foo bar? =
-
-Answer to foo bar dilemma.
-
 == Screenshots ==
 
 1. Picture of the widget just after it was added.  It is empty and not filled out yet.
