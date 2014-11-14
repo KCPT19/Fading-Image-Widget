@@ -57,7 +57,7 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
         if ( $img1 ):
             $image_attributes = wp_get_attachment_image_src($img1, 'small');
-            ?><img class="image-widget-image" src="<?php echo $image_attributes[0]; ?>" width="<?php echo $image_attributes[1]; ?>" height="<?php $image_attributes[2]; ?>" /><?php
+            ?><img class="image-widget-image" src="<?php echo $image_attributes[0]; ?>" width="<?php echo $image_attributes[1]; ?>" height="<?php echo $image_attributes[2]; ?>" /><?php
         endif;
 
         if ( $img1 and $img2 ):
@@ -74,20 +74,15 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
         <?php endif; ?>
 
         <?php echo $after_widget; ?>
-
+        <?php
+        global $KCPTFadingImageWidgetCSSLoaded;
+        if( $KCPTFadingImageWidgetCSSLoaded === false ): ?>
         <style>
             .img-widget {
                 position: relative;
             }
             .img-widget img {
                 height: auto;
-                width: 100%;
-            }
-            .img-widget .image-widget-hover-image {
-                left: 0px;
-                opacity: 0;
-                position: absolute;
-                top: 0px;
                 width: 100%;
 
                 -webkit-transition: opacity 0.5s ease-in-out;
@@ -96,11 +91,28 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
                 -o-transition: opacity 0.5s ease-in-out;
                 transition: opacity 0.5s ease-in-out;
             }
+            .img-widget:hover .image-widget-image {
+                opacity: 1;
+            }
+            .img-widget .image-widget-hover-image {
+                left: 0px;
+                opacity: 0;
+                position: absolute;
+                top: 0px;
+                width: 100%;
+
+
+            }
+            .img-widget:hover .image-widget-image {
+                opacity: 0;
+            }
             .img-widget:hover .image-widget-hover-image {
                 opacity: 1;
             }
         </style>
         <?php
+            $KCPTFadingImageWidgetCSSLoaded = true;
+        endif;
 
     }
 
@@ -192,13 +204,13 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
                         //Create WP media frame.
                         custom_file_frame = wp.media.frames.customHeader = wp.media({
                             //Title of media manager frame
-                            title: "Sample title of WP Media Uploader Frame",
+                            title: "Select Image for Widget",
                             library: {
                                 type: 'image'
                             },
                             button: {
                                 //Button text
-                                text: "insert text"
+                                text: "Insert Image"
                             },
                             //Do not allow multiple files, if you want multiple, set true
                             multiple: false
@@ -215,15 +227,18 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
                     })
                 });
             })(jQuery);
-        </script>
+        </script><?php
 
-    <?php
     }
 }
 
 function kcpt_image_widgets_init() {
+
     register_widget( 'KCPT_Fading_Image_Widget' );
+
 }
+global $KCPTFadingImageWidgetCSSLoaded;
+$KCPTFadingImageWidgetCSSLoaded = false;
 
 add_action( 'widgets_init', 'kcpt_image_widgets_init' );
 
