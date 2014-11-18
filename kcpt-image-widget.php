@@ -3,7 +3,7 @@
  * Plugin Name: KCPT Fading Image Widget
  * Plugin URI: http://www.KCPT.org/
  * Description: A simple image widget which will fade another image through on hover.
- * Version: 0.0.2
+ * Version: 0.0.3
  * Author: Steven Kohlmeyer
  * Author URI: http://StevenKohlmeyer.com
  * License: LGPL2
@@ -55,15 +55,26 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
         <?php endif; ?>
         <?php
 
-        if ( $img1 ):
+        if ( $img1 ) {
             $image_attributes = wp_get_attachment_image_src($img1, 'small');
-            ?><img class="image-widget-image" src="<?php echo $image_attributes[0]; ?>" width="<?php echo $image_attributes[1]; ?>" height="<?php echo $image_attributes[2]; ?>" /><?php
-        endif;
+            $imageOneClasses = "";
+            if ($img2) {
+                $imageOneClasses .= " fade";
+            }
+            ?><img class="image-widget-image <?php echo $imageOneClasses; ?>" src="<?php echo $image_attributes[0]; ?>"
+                   width="<?php echo $image_attributes[1]; ?>" height="<?php echo $image_attributes[2]; ?>" /><?php
+        }
 
-        if ( $img1 and $img2 ):
+        if ( $img2 ) {
+            $imageOneClasses = "";
+            if ($img1) {
+                $imageOneClasses .= " fade";
+            }
             $image_attributes_ro = wp_get_attachment_image_src($img2, 'small');
-            ?><img class="image-widget-hover-image" src="<?php echo $image_attributes_ro[0]; ?>" width="<?php echo $image_attributes_ro[1]; ?>" height="<?php echo $image_attributes_ro[2]; ?>" /><?php
-        endif;
+            ?><img class="image-widget-hover-image <?php echo $imageOneClasses; ?>"
+                   src="<?php echo $image_attributes_ro[0]; ?>" width="<?php echo $image_attributes_ro[1]; ?>"
+                   height="<?php echo $image_attributes_ro[2]; ?>" /><?php
+        }
 
         ?>
         <?php if( $href ): ?>
@@ -91,10 +102,7 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
                 -o-transition: opacity 0.5s ease-in-out;
                 transition: opacity 0.5s ease-in-out;
             }
-            .img-widget:hover .image-widget-image {
-                opacity: 1;
-            }
-            .img-widget .image-widget-hover-image {
+            .img-widget .image-widget-hover-image.fade {
                 left: 0px;
                 opacity: 0;
                 position: absolute;
@@ -103,7 +111,13 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
 
             }
-            .img-widget:hover .image-widget-image {
+            .img-widget .image-widget-image {
+                opacity: 1;
+            }
+            .img-widget:hover .image-widget-image.fade {
+                opacity: 0;
+            }
+            .img-widget .image-widget-hover-image.fade {
                 opacity: 0;
             }
             .img-widget:hover .image-widget-hover-image {
@@ -147,7 +161,6 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
         $img_thumb2     = false;
         $instance       = wp_parse_args( (array) $instance, $defaults );
 
-
         if( $instance['img1'] ) {
             $img_thumb  = wp_get_attachment_image_src($instance['img1'], 'thumbnail');
         }
@@ -157,6 +170,9 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
         ?>
 
+        <p>
+            To remove image, either click Insert image to replace, or remove image ID number and click save to delete.
+        </p>
         <p>
             <label for="<?php echo $this->get_field_id( 'title' ); ?>">Title (Optional)</label>
             <input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />

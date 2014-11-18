@@ -4,7 +4,7 @@ Donate link: http://www.kcpt.org/
 Tags: widget, image, image widget
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 0.0.2
+Stable tag: 0.0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,6 +28,10 @@ A simple image widget, you can set a url for the image to link to upon click.  Y
 2. The widget filled out.
 
 == Changelog ==
+
+= 0.0.3 =
+* Disabled Fade feature if both images aren't specified
+* Image 2 will take place of image 1 if it is omitted.
 
 = 0.0.2 =
 * Added css to fade image 1 out, while fading image 2 in
