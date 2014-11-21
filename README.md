@@ -3,7 +3,7 @@ This is a simple image widget, allows a url to be set on the image so it's click
 
 Wordpress.org
 =============
-[https://wordpress.org/plugins/shortcodes-bootstrap/](https://wordpress.org/plugins/shortcodes-bootstrap/)
+[https://wordpress.org/plugins/kcpt-fading-image-widget/](https://wordpress.org/plugins/kcpt-fading-image-widget/)
 
 Screenshots
 ===========
