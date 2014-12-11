@@ -3,7 +3,7 @@
  * Plugin Name: KCPT Fading Image Widget
  * Plugin URI: http://www.KCPT.org/
  * Description: A simple image widget which will fade another image through on hover.
- * Version: 0.0.3
+ * Version: 0.0.4
  * Author: Steven Kohlmeyer
  * Author URI: http://StevenKohlmeyer.com
  * License: LGPL2
@@ -12,11 +12,16 @@
 class KCPT_Fading_Image_Widget extends WP_Widget {
 
     function __construct() {
+
         parent::__construct(
+
             'kcpt_image_widget',
             'Fading Image Widget',
             array( 'description' => 'A widget that displays an image box - linkable and can fade into a 2nd image.' )
+
         );
+
+
     }
 
     public $option_name = "";
@@ -56,24 +61,37 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
         <?php
 
         if ( $img1 ) {
+
             $image_attributes = wp_get_attachment_image_src($img1, 'small');
             $imageOneClasses = "";
+
             if ($img2) {
+
                 $imageOneClasses .= " fade";
+
             }
+
             ?><img class="image-widget-image <?php echo $imageOneClasses; ?>" src="<?php echo $image_attributes[0]; ?>"
                    width="<?php echo $image_attributes[1]; ?>" height="<?php echo $image_attributes[2]; ?>" /><?php
+
         }
 
         if ( $img2 ) {
+
             $imageOneClasses = "";
+
             if ($img1) {
+
                 $imageOneClasses .= " fade";
+
             }
+
             $image_attributes_ro = wp_get_attachment_image_src($img2, 'small');
+
             ?><img class="image-widget-hover-image <?php echo $imageOneClasses; ?>"
                    src="<?php echo $image_attributes_ro[0]; ?>" width="<?php echo $image_attributes_ro[1]; ?>"
                    height="<?php echo $image_attributes_ro[2]; ?>" /><?php
+
         }
 
         ?>
@@ -86,62 +104,23 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
         <?php echo $after_widget; ?>
         <?php
-        global $KCPTFadingImageWidgetCSSLoaded;
-        if( $KCPTFadingImageWidgetCSSLoaded === false ): ?>
-        <style>
-            .img-widget {
-                position: relative;
-            }
-            .img-widget img {
-                height: auto;
-                width: 100%;
-
-                -webkit-transition: opacity 0.5s ease-in-out;
-                -moz-transition: opacity 0.5s ease-in-out;
-                -ms-transition: opacity 0.5s ease-in-out;
-                -o-transition: opacity 0.5s ease-in-out;
-                transition: opacity 0.5s ease-in-out;
-            }
-            .img-widget .image-widget-hover-image.fade {
-                left: 0px;
-                opacity: 0;
-                position: absolute;
-                top: 0px;
-                width: 100%;
-
-
-            }
-            .img-widget .image-widget-image {
-                opacity: 1;
-            }
-            .img-widget:hover .image-widget-image.fade {
-                opacity: 0;
-            }
-            .img-widget .image-widget-hover-image.fade {
-                opacity: 0;
-            }
-            .img-widget:hover .image-widget-hover-image {
-                opacity: 1;
-            }
-        </style>
-        <?php
-            $KCPTFadingImageWidgetCSSLoaded = true;
-        endif;
 
     }
 
     //Update the widget
 
     function update( $new_instance, $old_instance ) {
+
         $instance = $old_instance;
 
         //Strip tags from title and name to remove HTML
-        $instance['title']                      = strip_tags( $new_instance['title'] );
-        $instance['img1']                       = strip_tags( $new_instance['img1'] );
-        $instance['img2']                       = strip_tags( $new_instance['img2'] );
-        $instance['href']                       = strip_tags( $new_instance['href'] );
+        $instance['title']  = strip_tags( $new_instance['title'] );
+        $instance['img1']   = strip_tags( $new_instance['img1'] );
+        $instance['img2']   = strip_tags( $new_instance['img2'] );
+        $instance['href']   = strip_tags( $new_instance['href'] );
 
         return $instance;
+
     }
 
 
@@ -151,10 +130,10 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
 
         //Set up some default widget settings.
         $defaults = array(
-            'href'                      => false,
-            'img1'                      => false,
-            'img2'                      => false,
-            'title'                     => false
+            'href'          => false,
+            'img1'          => false,
+            'img2'          => false,
+            'title'         => false
         );
 
         $img_thumb      = false;
@@ -162,10 +141,14 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
         $instance       = wp_parse_args( (array) $instance, $defaults );
 
         if( $instance['img1'] ) {
+
             $img_thumb  = wp_get_attachment_image_src($instance['img1'], 'thumbnail');
+
         }
         if( $instance['img2'] ) {
+
             $img_thumb2 = wp_get_attachment_image_src($instance['img2'], 'thumbnail');
+
         }
 
         ?>
@@ -202,48 +185,7 @@ class KCPT_Fading_Image_Widget extends WP_Widget {
             <label for="<?php echo $this->get_field_id( 'href' ); ?>">URL</label>
             <input id="<?php echo $this->get_field_id( 'href' ); ?>" name="<?php echo $this->get_field_name( 'href' ); ?>" value="<?php echo $instance['href']; ?>" style="width:100%;" />
         </p>
-
-        <script>
-            (function($) {
-                $(document).ready(function() {
-                    $('.insert-kcpt-image').click(function(e) {
-
-                        e.preventDefault();
-
-                        var inputToFill = $(e.currentTarget).prev('input[type="text"]');
-                        
-                        //If the frame already exists, reopen it
-                        if (typeof(custom_file_frame)!=="undefined") {
-                            custom_file_frame.close();
-                        }
-
-                        //Create WP media frame.
-                        custom_file_frame = wp.media.frames.customHeader = wp.media({
-                            //Title of media manager frame
-                            title: "Select Image for Widget",
-                            library: {
-                                type: 'image'
-                            },
-                            button: {
-                                //Button text
-                                text: "Insert Image"
-                            },
-                            //Do not allow multiple files, if you want multiple, set true
-                            multiple: false
-                        });
-
-                        //callback for selected image
-                        custom_file_frame.on('select', function() {
-                            var attachment = custom_file_frame.state().get('selection').first().toJSON();
-                            $(inputToFill).val(attachment.id);
-                        });
-
-                        //Open modal
-                        custom_file_frame.open();
-                    })
-                });
-            })(jQuery);
-        </script><?php
+        <?php
 
     }
 }
@@ -253,9 +195,51 @@ function kcpt_image_widgets_init() {
     register_widget( 'KCPT_Fading_Image_Widget' );
 
 }
-global $KCPTFadingImageWidgetCSSLoaded;
-$KCPTFadingImageWidgetCSSLoaded = false;
+
+class KCPT_Fading_Image_Widget_Helper {
+
+    public function __construct() {
+
+        $this->loadJS = false;
+        add_action( 'current_screen', array( $this, 'currentScreen' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 1 );
+        add_action( 'admin_enqueue_scripts', array( $this, 'adminEnqueue' ), 1 );
+
+    }
+
+    function currentScreen() {
+
+        $thisScreen = get_current_screen();
+
+        if( $thisScreen->id === "widgets" ) {
+
+            $this->loadJS = true;
+
+            add_action( 'wp_enqueue_scripts', array( $this, 'adminEnqueue' ), 1 );
+
+        }
+
+    }
+
+    function adminEnqueue() {
+
+        if( $this->loadJS === true ) {
+
+            wp_enqueue_script( 'kcpt-fading-image-widget-js', plugins_url( 'kcpt-fading-image-widget.js', __FILE__ ), array(), array(), 10 );
+
+        }
+
+    }
+
+    function enqueue() {
+
+        wp_enqueue_style( 'kcpt-fading-image-widget-css', plugins_url( 'kcpt-fading-image-widget.css', __FILE__ ), array(), array(), 'all' );
+
+    }
+
+}
 
 add_action( 'widgets_init', 'kcpt_image_widgets_init' );
 
 
+$KCPTFadingImageWidgetHelper = new KCPT_Fading_Image_Widget_Helper();
