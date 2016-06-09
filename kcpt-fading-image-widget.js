@@ -1,7 +1,8 @@
 (function($) {
     $(document).ready(function() {
-        $('.insert-kcpt-image').click(function(e) {
 
+
+        window.fiwInsertImage = function(e) {
             e.preventDefault();
 
             var inputToFill = $(e.currentTarget).prev('input[type="text"]');
@@ -34,6 +35,20 @@
 
             //Open modal
             custom_file_frame.open();
+        };
+
+        window.bindFadingImageWidget = function() {
+            $('.insert-kcpt-image').off('click', fiwInsertImage);
+            $('.insert-kcpt-image').on('click', fiwInsertImage);
+        };
+
+
+        bindFadingImageWidget();
+
+        $(document).on('widget-added', function(e, widget) {
+            bindFadingImageWidget();
         })
+
+
     });
 })(jQuery);
