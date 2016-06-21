@@ -1,5 +1,5 @@
 === KCPT Fading Image Widget ===
-Contributors: Fastmover
+Contributors: Fastmover, KCPT
 Donate link: http://www.kcpt.org/
 Tags: widget, image, image widget
 Requires at least: 3.5
